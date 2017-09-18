@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const morgan = require('morgan');
 const path = require('path');
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 
 app.use(morgan("dev"));
 
