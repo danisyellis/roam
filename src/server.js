@@ -1,18 +1,20 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-// const routes = require('./server/routes');
+ const routes = require('./server/routes');
 const app = express();
 const morgan = require('morgan');
+const path = require('path');
 
 app.use(morgan("dev"));
 
 app.set('view engine', 'pug');
-// app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/views');
+app.locals.basedir = path.join(__dirname, '/views');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use('/', routes);
+app.use('/', routes);
 
 app.use((request, response) => {
   response.status(404).send("That page wasn't found");
