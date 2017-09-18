@@ -1,0 +1,13 @@
+extends /partials/layout
+
+block content
+  h1 Signup
+    form(method="post", action="auth/signup" )
+      label
+        span email:
+        input(type="email", name="email", maxlength="20")
+      label
+        span password:
+        input(type="password", name="password")
+      input(type="submit" value="Signup") 
+  a(href="/auth/login") Login

@@ -1,0 +1,33 @@
+{
+  "name": "roam",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:reset": "dropdb roam_development && createdb roam_development && npm run load_schema",
+   "load_schema": "psql -d roam_development < src/models/db/schema.sql",
+   "load_contacts": "psql -d roam_development < test/seed/contacts.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danisyellis/roam.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danisyellis/roam/issues"
+  },
+  "homepage": "https://github.com/danisyellis/roam#readme",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "connect-pg-simple": "^4.2.1",
+    "express": "^4.15.4",
+    "express-session": "^1.15.5",
+    "morgan": "^1.8.2",
+    "path": "^0.12.7",
+    "pug": "^2.0.0-rc.4"
+  }
+}
