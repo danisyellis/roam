@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
- const routes = require('./server/routes');
+const routes = require('./server/routes');
 const app = express();
 const morgan = require('morgan');
 const path = require('path');
