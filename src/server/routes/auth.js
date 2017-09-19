@@ -1,8 +1,6 @@
 const router = require('express').Router();
 
 
-
-
 router.get('/signup', (request, response) => {
   response.render('auth/signup');
 });
