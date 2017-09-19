@@ -16,5 +16,3 @@ const createUser = function(email, password){
     .catch(error => { console.log(error.message);
     });
 };
-
-createUser("d@d.com", "sosecret");

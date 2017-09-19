@@ -14,9 +14,11 @@ module.exports = (() => {
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         name: process.env.DB_NAME
+      },
+      server: {
+        port: process.env.PORT
       }
     };
-    return config;
   };
 
   makeConfig();
