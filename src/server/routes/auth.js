@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {encryptPassword, comparePasswords } = require('../utils');
+const { encryptPassword, comparePasswords, createSession } = require('../utils');
 const Users = require('../../models/users');
 
 router.get('/signup', (request, response) => {
@@ -11,14 +11,13 @@ router.post('/signup', (request, response) => {
   const password = request.body.password;
   encryptPassword(password)
   .then(hashedPassword => {
-    Users.create(email, hashedPassword);
-  })
-  .then(newUser => {
-    // createSession(request, response, newUser); //TODO:need to create
-  // const id = newUser.id;
-    response.redirect('/signup');
-  });
-
+    Users.create(email, hashedPassword)
+    .then(newUser => {
+     createSession(request, response, newUser);
+     const id = newUser.id;
+     response.redirect('/users/:id');
+   });
+ });
 });
 
 router.get('/users/:id', (request, response) => {

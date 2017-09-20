@@ -18,6 +18,17 @@ app.locals.basedir = path.join(__dirname, '/views');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(session({
+  store: new pgSession({
+    conString: `postgres://${config.getIn(["db", "host"])}:${config.getIn(["db", "port"])}/${config.getIn(["db", "name"])}`
+  }),
+  //TODO: put the secret into .env
+  secret: 'yay',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {maxAge: 1 * 24 * 60 * 60 * 1000}
+}));
+
 app.use('/', routes);
 
 app.use((request, response) => {
