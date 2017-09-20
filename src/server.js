@@ -24,5 +24,5 @@ app.use((request, response) => {
   response.status(404).send("That page wasn't found");
 });
 
-const port = config.server.port || 3000;
+const port = config.get("server").port || 3000;
 app.listen(port, console.log(`I'm listening on port ${port}`));
