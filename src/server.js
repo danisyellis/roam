@@ -6,15 +6,28 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
+const config = require('./config/config.js').getConfig();
 
 app.use(morgan("dev"));
 
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
+//pug needs a basedir or else it won't work
 app.locals.basedir = path.join(__dirname, '/views');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(session({
+  store: new pgSession({
+    conString: `postgres://${config.getIn(["db", "host"])}:${config.getIn(["db", "port"])}/${config.getIn(["db", "name"])}`
+  }),
+  //TODO: put the secret into .env
+  secret: 'yay',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {maxAge: 1 * 24 * 60 * 60 * 1000}
+}));
 
 app.use('/', routes);
 
@@ -22,5 +35,5 @@ app.use((request, response) => {
   response.status(404).send("That page wasn't found");
 });
 
-const port = process.env.PORT || 3000;
+const port = config.get("server").port || 3000;
 app.listen(port, console.log(`I'm listening on port ${port}`));

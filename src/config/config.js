@@ -1,5 +1,7 @@
+const Immutable = require('immutable');
+
 module.exports = (() => {
-  let config = {};
+  let config;
 
   const getEnv = () => {
     return process.env.NODE_ENV;
@@ -9,14 +11,16 @@ module.exports = (() => {
     if (getEnv() === 'development') {
       require('dotenv').config({path: __dirname + "/../../.env"});
     }
-    config = {
-      db: {
+    config = Immutable.Map({
+      db: Immutable.Map({
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         name: process.env.DB_NAME
-      }
-    };
-    return config;
+      }),
+      server: Immutable.Map({
+        port: process.env.PORT
+      })
+    });
   };
 
   makeConfig();
