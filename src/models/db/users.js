@@ -1,19 +1,19 @@
 const db = require("./db");
 
-const findByEmail = (email) => {
+const findById = (id) => {
   return db.oneOrNone(`
     SELECT
-      email
+      *
     FROM
       users
-    WHERE email=$1
-    `, email)
+    WHERE id=$1
+    `, id)
     .catch(error => console.log(error.message));
 };
 
 
 const create = (email, password) => {
-  return db.query(`
+  return db.oneOrNone(`
     INSERT INTO
       users (email, password)
     VALUES
@@ -29,7 +29,15 @@ const create = (email, password) => {
     });
 };
 
+const getPostsByUserId = function(userId) {
+  return db.any(`
+    SELECT * FROM posts
+    WHERE user_id = $1
+    `, userId);
+};
+
 module.exports = {
-  findByEmail,
-  create
-}
+  findById,
+  create,
+  getPostsByUserId
+};

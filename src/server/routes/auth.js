@@ -15,16 +15,21 @@ router.post('/signup', (request, response) => {
     .then(newUser => {
      createSession(request, response, newUser);
      const id = newUser.id;
-     response.redirect('/users/:id');
+     response.redirect(`/users/${id}`);
    });
  });
 });
 
 router.get('/users/:id', (request, response) => {
-  Users.findByEmail('d@d.com')
-  .then(email => {console.log('did it work? email::', email)})
-  response.send('hello')
-})
+  const id = request.params.id;
+  Users.findById(id)
+  .then(user => {
+    Users.getPostsByUserId(user.id)
+    .then(posts => {
+      response.render('users/show', {user, posts});
+    });
+  });
+});
 
 router.get('/login', (request, response) => {
   response.render('auth/login');
