@@ -16,19 +16,11 @@ router.post('/signup', (request, response) => {
      createSession(request, response, newUser);
      const id = newUser.id;
      response.redirect(`/users/${id}`);
+   })
+   .catch(error => {
+     response.render('auth/signup', {warning: 'That username already exists. Please choose another.'});
    });
  });
-});
-
-router.get('/users/:id', (request, response) => {
-  const id = request.params.id;
-  Users.findById(id)
-  .then(user => {
-    Users.getPostsByUserId(user.id)
-    .then(posts => {
-      response.render('users/show', {user, posts});
-    });
-  });
 });
 
 router.get('/login', (request, response) => {
@@ -36,9 +28,23 @@ router.get('/login', (request, response) => {
 });
 
 router.post('/login', (request, response) => {
-
-  //do things
-  response.redirect('/users/:id');
+  const email = request.body.email;
+  const password = request.body.password;
+  Users.findByEmail(email)
+  .then(user => {
+    comparePasswords(password, user.password)
+    .then(passwordsMatch => {
+      if(passwordsMatch) {
+        createSession(request, response, user);
+        response.redirect(`/users/${user.id}`);
+      } else {
+        response.render('auth/login', {warning: 'Incorrect username or password'});
+      }
+    });
+  })
+  .catch(error => {
+    response.render('auth/login', {warning: 'Incorrect username or password'});
+  });
 });
 
 module.exports = router;
