@@ -28,6 +28,7 @@ block content
   
   div.edit-profile-modal
     div.edit-profile-modal-content
+      span.close-modal &times;
       form(action=`/users/${user.id}?_method=PUT`, method="POST")
         div Name:
           input(type="text" name="name" value=`${user.name}`)
