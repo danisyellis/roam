@@ -14,16 +14,24 @@ block content
     else
       p Date Joined:
       
-    if user.city
-      p #{user.city}
+    if user.current_city
+      p #{user.current_city}
     else
       p Current City:
       
-    a(href="/users/edit")
-      button(type="button") Edit Profile
+    button.edit-profile-button(type="button") Edit Profile
       
   div.rightColumn
     each post in posts
       p
-        a(href="/posts/:id") #{post.title}
+        a(href=`/posts/${post.id}`) #{post.title}
   
+  div.edit-profile-modal
+    div.edit-profile-modal-content
+      form(action=`/users/${user.id}?_method=PUT`, method="POST")
+        div Name:
+          input(type="text" name="name" value=`${user.name}`)
+        div Current City:
+          input(type="text" name="currentCity" value=`${user.current_city}`)
+        input(type="submit", value="Submit")
+            

@@ -22,7 +22,20 @@ const getById = function(id) {
   });
 };
 
+const getNameFromUser = function(userId) {
+  return db.one(`
+    SELECT users.name FROM users
+    JOIN posts
+    ON users.id = $1
+    `, userId)
+    .catch(error => {
+      console.error(error.message, "The argument is:::", userId);
+      throw error;
+    });
+};
+
 module.exports = {
   getByUserId,
-  getById
+  getById,
+  getNameFromUser
 };

@@ -47,10 +47,19 @@ const create = (email, password) => {
   });
 };
 
+const update = (name, currentCity, id) => {
+  return db.query(`
+    UPDATE users
+    SET name=$1, current_city=$2
+    WHERE id=$3
+    `, [name, currentCity, id]);
+};
+
 
 
 module.exports = {
   findById,
   create,
-  findByEmail
+  findByEmail,
+  update
 };

@@ -15,5 +15,17 @@ router.get('/:id', (request, response) => {
   });
 });
 
+router.put('/:id', (request, response) => {
+  const id = request.params.id;
+  console.log(id, "is the id");
+  console.log("The body.name is:::", request.body.name);
+  const currentCity = request.body.currentCity;
+  const name = request.body.name;
+  Users.updateProfile(name, currentCity, id)
+  .then(() => {
+    response.redirect(`/users/${id}`);
+  });
+});
+
 
 module.exports = router;

@@ -6,7 +6,11 @@ router.get('/:id', (request, response) => {
   Posts.getById(id)
   .then(post => {
     console.log(post);
-    response.render("posts/show", {post});
+    Posts.getAuthor(post.user_id)
+    .then(name => {
+      const author = name.name;
+      response.render("posts/show", {post, author});
+    });
   });
 });
 
