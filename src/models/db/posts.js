@@ -11,6 +11,18 @@ const getByUserId = function(userId) {
   });
 };
 
+const getById = function(id) {
+  return db.one(`
+    SELECT * FROM posts
+    WHERE id = $1
+    `, id)
+  .catch(error => {
+    console.error(error.message);
+    throw error;
+  });
+};
+
 module.exports = {
-  getByUserId
+  getByUserId,
+  getById
 };
