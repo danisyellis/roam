@@ -2,14 +2,23 @@ const router = require('express').Router();
 const auth = require('./auth');
 const users = require('./users');
 const posts = require('./posts');
+const {isLoggedIn} = require('../utils');
+
+
+router.get('/', (request, response) => {
+  if(request.session.user) {
+    const id = request.session.user.id;
+    response.redirect(`/users/${id}`);
+  }
+  response.render('index');
+});
 
 router.use('/', auth);
+router.use(isLoggedIn);
 router.use('/users', users);
 router.use('/posts', posts);
 
-router.get('/', (request, response) => {
-  response.render('index');
-});
+
 
 
 

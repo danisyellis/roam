@@ -31,8 +31,14 @@ block content
       span.close-modal &times;
       form(action=`/users/${user.id}?_method=PUT`, method="POST")
         div Name:
-          input(type="text" name="name" value=`${user.name}`)
+          if user.name === null        
+            input(type="text" name="name")
+          else
+            input(type="text" name="name" value=`${user.name}`)    
         div Current City:
-          input(type="text" name="currentCity" value=`${user.current_city}`)
+          if user.currentCity === null
+            input(type="text" name="currentCity")
+          else 
+            input(type="text" name="currentCity" value=`${user.current_city}`)  
         input(type="submit", value="Submit")
             
