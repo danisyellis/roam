@@ -1,0 +1,44 @@
+extends /partials/layout
+
+block content
+  
+  div.leftColumn
+    img(src="/blank-profile-picture.png")
+    if user.name
+      p #{user.name}
+    else
+      p Name:
+      
+    if user.date_joined
+      p Member since #{user.date_joined}
+    else
+      p Date Joined:
+      
+    if user.current_city
+      p #{user.current_city}
+    else
+      p Current City:
+      
+    button.edit-profile-button(type="button") Edit Profile
+      
+  div.rightColumn
+    each post in posts
+      p
+        a(href=`/posts/${post.id}`) #{post.title}
+  
+  div.edit-profile-modal
+    div.edit-profile-modal-content
+      span.close-modal &times;
+      form(action=`/users/${user.id}?_method=PUT`, method="POST")
+        div Name:
+          if user.name === null        
+            input(type="text" name="name")
+          else
+            input(type="text" name="name" value=`${user.name}`)    
+        div Current City:
+          if user.currentCity === null
+            input(type="text" name="currentCity")
+          else 
+            input(type="text" name="currentCity" value=`${user.current_city}`)  
+        input(type="submit", value="Submit")
+            

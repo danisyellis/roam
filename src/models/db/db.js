@@ -7,12 +7,9 @@ const connectionObject = {
   port: config.get("db").get("port"),
   database: config.get("db").get("name")
 };
-
-//where I got the error-checking code https://stackoverflow.com/questions/36120435/verify-database-connection-with-pg-promise-when-starting-an-app
+ //write a function to check to see if my connection object is valid- if host, for example, is undefined, it still works and does not throw an error below
 
 const db = pgp(connectionObject);
-//const db = pgp('postgresql://userName:password@host:port/database');
-
 
 //check to see if we can connect to the db. If not, catch an error
 db.connect()

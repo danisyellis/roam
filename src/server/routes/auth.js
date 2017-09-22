@@ -1,8 +1,13 @@
 const router = require('express').Router();
 const { encryptPassword, comparePasswords, createSession } = require('../utils');
 const Users = require('../../models/users');
+const utils = require('../utils');
 
 router.get('/signup', (request, response) => {
+  if(request.session.user) {
+    const id = request.session.user.id;
+    response.redirect(`/users/${id}`);
+  }
   response.render('auth/signup');
 });
 
@@ -16,29 +21,48 @@ router.post('/signup', (request, response) => {
      createSession(request, response, newUser);
      const id = newUser.id;
      response.redirect(`/users/${id}`);
+   })
+   .catch(error => {
+     response.render('auth/signup', {warning: 'That username already exists. Please choose another.'});
    });
  });
 });
 
-router.get('/users/:id', (request, response) => {
-  const id = request.params.id;
-  Users.findById(id)
+router.get('/login', (request, response) => {
+  if(request.session.user) {
+    const id = request.session.user.id;
+    response.redirect(`/users/${id}`);
+  }
+    response.render('auth/login');
+  }
+);
+
+router.post('/login', (request, response) => {
+  const email = request.body.email;
+  const password = request.body.password;
+  Users.findByEmail(email)
   .then(user => {
-    Users.getPostsByUserId(user.id)
-    .then(posts => {
-      response.render('users/show', {user, posts});
+    comparePasswords(password, user.password)
+    .then(passwordsMatch => {
+      if(passwordsMatch) {
+        createSession(request, response, user);
+        request.session.save(function(err) {
+          response.redirect(`/users/${user.id}`);
+        });
+      } else {
+        response.render('auth/login', {warning: 'Incorrect username or password'});
+      }
     });
+  })
+  .catch(error => {
+    response.render('auth/login', {warning: 'Incorrect username or password'});
   });
 });
 
-router.get('/login', (request, response) => {
-  response.render('auth/login');
-});
-
-router.post('/login', (request, response) => {
-
-  //do things
-  response.redirect('/users/:id');
+router.get('/logout', (request, response) => {
+  request.session.destroy(() => {
+    response.redirect('/login');
+  });
 });
 
 module.exports = router;

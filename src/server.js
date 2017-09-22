@@ -4,6 +4,7 @@ const routes = require('./server/routes');
 const app = express();
 const morgan = require('morgan');
 const path = require('path');
+const methodOverride = require('method-override');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const config = require('./config/config.js').getConfig();
@@ -17,6 +18,12 @@ app.locals.basedir = path.join(__dirname, '/views');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
+app.use((request, response, next) => {
+  response.locals.query = '';
+  response.locals.isLoggedIn = false;
+  next()
+});
 
 app.use(session({
   store: new pgSession({

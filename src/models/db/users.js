@@ -8,9 +8,25 @@ const findById = (id) => {
       users
     WHERE id=$1
     `, id)
-    .catch(error => console.log(error.message));
-};
+    .catch(error => {
+      console.error(error.message);
+      throw error;
+    });
+  };
 
+const findByEmail = (email) => {
+  return db.oneOrNone(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE email=$1
+    `, email)
+  .catch(error => {
+    console.error(error.message);
+    throw error;
+  });
+};
 
 const create = (email, password) => {
   return db.oneOrNone(`
@@ -25,19 +41,25 @@ const create = (email, password) => {
       email,
       password,
     ])
-    .catch(error => { console.log(error.message);
-    });
+  .catch(error => {
+    console.error(error.message);
+    throw error;
+  });
 };
 
-const getPostsByUserId = function(userId) {
-  return db.any(`
-    SELECT * FROM posts
-    WHERE user_id = $1
-    `, userId);
+const update = (name, currentCity, id) => {
+  return db.query(`
+    UPDATE users
+    SET name=$1, current_city=$2
+    WHERE id=$3
+    `, [name, currentCity, id]);
 };
+
+
 
 module.exports = {
   findById,
   create,
-  getPostsByUserId
+  findByEmail,
+  update
 };

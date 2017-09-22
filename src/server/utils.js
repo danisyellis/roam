@@ -13,9 +13,20 @@ const createSession = (request, response, user) => {
   request.session.user = user;
 };
 
+const isLoggedIn = (request, response, next) => {
+  console.log('request.session.user', request.session.user);
+  if(!request.session.user) {
+    response.redirect('/login');
+  } else {
+    response.locals.isLoggedIn = true;
+    next();
+  }
+};
+
 
 module.exports = {
   encryptPassword,
   comparePasswords,
-  createSession
+  createSession,
+  isLoggedIn
 };
