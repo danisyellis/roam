@@ -1,4 +1,4 @@
-const db = require('./db/users.js');
+const db = require('./db/users');
 
 const findById = (id) => {
   return db.findById(id);

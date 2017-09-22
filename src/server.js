@@ -30,7 +30,7 @@ app.use(session({
     conString: `postgres://${config.getIn(["db", "host"])}:${config.getIn(["db", "port"])}/${config.getIn(["db", "name"])}`
   }),
   //TODO: put the secret into .env
-  secret: 'yay',
+  secret: config.get("server").get("secret"),
   resave: false,
   saveUninitialized: false,
   cookie: {maxAge: 1 * 24 * 60 * 60 * 1000}
@@ -42,5 +42,5 @@ app.use((request, response) => {
   response.status(404).send("That page wasn't found");
 });
 
-const port = config.get("server").port || 3000;
+const port = config.get("server").get("port");
 app.listen(port, console.log(`I'm listening on port ${port}`));

@@ -18,7 +18,8 @@ module.exports = (() => {
         name: process.env.DB_NAME
       }),
       server: Immutable.Map({
-        port: process.env.PORT
+        port: process.env.PORT,
+        secret: process.env.SECRET
       })
     });
   };

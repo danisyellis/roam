@@ -14,7 +14,6 @@ const createSession = (request, response, user) => {
 };
 
 const isLoggedIn = (request, response, next) => {
-  console.log('request.session.user', request.session.user);
   if(!request.session.user) {
     response.redirect('/login');
   } else {

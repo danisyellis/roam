@@ -20,7 +20,9 @@ router.post('/signup', (request, response) => {
     .then(newUser => {
      createSession(request, response, newUser);
      const id = newUser.id;
-     response.redirect(`/users/${id}`);
+     request.session.save(function(err) {
+       response.redirect(`/users/${newUser.id}`);
+     });
    })
    .catch(error => {
      response.render('auth/signup', {warning: 'That username already exists. Please choose another.'});
