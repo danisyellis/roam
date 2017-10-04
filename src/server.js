@@ -29,7 +29,6 @@ app.use(session({
   store: new pgSession({
     conString: `postgres://${config.getIn(["db", "host"])}:${config.getIn(["db", "port"])}/${config.getIn(["db", "name"])}`
   }),
-  //TODO: put the secret into .env
   secret: config.get("server").get("secret"),
   resave: false,
   saveUninitialized: false,
@@ -43,4 +42,4 @@ app.use((request, response) => {
 });
 
 const port = config.get("server").get("port");
-app.listen(port, console.log(`I'm listening on port ${port}`));
+app.listen(port, console.log(`I'm listening on port${port}`));

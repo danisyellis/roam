@@ -22,6 +22,7 @@ const findById = (id) => {
 };
 
 const getPostsByCityId = (id) => {
+  console.log("here?????");
   return db.any(`
     SELECT * FROM posts
     JOIN cities

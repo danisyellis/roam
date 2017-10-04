@@ -1,0 +1,51 @@
+return db.tx(transaction => {
+})
+This transaction thing is for when you want to do multiple queries and, if one of them fails, roll back all of them - for if changes are dependent on one another.
+
+https://upload.wikimedia.org/wikipedia/commons/0/0c/Golden_Gate_Bridge%2C_San_Francisco_and_Sutro_Tower.jpg
+https://upload.wikimedia.org/wikipedia/commons/4/4d/Port_of_Oakland_Cranes_%2815389761152%29.jpg
+
+
+
+
+add a Readme
+**put app.use locals thing into middlewares file
+  **also, isLoggedIn into middleware (not utils)
+**controller shouldn't know anything about encryption- that encryptPassword promise could go inside of create function in the models/users in the create function.   That's the business logic of the application
+
+createSession saves it in the session
+req.session.save saves in the db
+**make sure to add error handling to the save and the req.session.destroy
+
+**your profile's url should be localhost:3000/profile
+
+whatever data I'm returning is the location of the folders I should be using
+  i.e. Posts.getByUserId is returning some posts so it's in the posts stuff
+
+try not to change db data (like we are doing with the date. Instead, say humanReadableDate = and then the change we're making)
+
+whenever I have thens, there's possible errors, so have catch blocks
+(in the routes, need catches for the throws from db and other places)
+
+send arguments as objects, not individually when possible. That way, I don't have to remember the order.
+  For example, in the users routes (the last one?)
+  then, can destructure them in the db query like in
+Common Mistakes pg-promise
+
+**Posts.getPostsByCityId   -this just takes the argument city.id(doesn't need weird template literal thing)
+
+**in the model, can get rid of the whole calling the function in db file thing by just writing this in
+module.exports
+getAll: db.getAll,
+etc.
+
+*don't need the join in getPostsByCityId  (another good reason to have it be a function in posts, not cities)
+
+**Users.findByPost or something like that for Posts.findNameByUserId or something like that (the author thing)
+
+Immutable is useful because:
+a= {aThing: 1, thing2: 2}
+a=b
+now, if Somaya changes b, a is also different. But I don't expect a to be different!
+
+If something doesn't exist, it should complain that it doesn't exist, don't put in a default value (like env variable for port, don't put || 3000)
