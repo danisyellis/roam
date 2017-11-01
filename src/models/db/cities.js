@@ -22,11 +22,9 @@ const findById = (id) => {
 };
 
 const getPostsByCityId = (id) => {
-  console.log("here?????");
   return db.any(`
     SELECT * FROM posts
-    JOIN cities
-    ON posts.city_id = $1
+    WHERE city_id = $1
     ORDER BY posts.title
     `, id)
     .catch(error => {

@@ -47,12 +47,12 @@ const create = (email, password) => {
   });
 };
 
-const update = (name, currentCity, id) => {
+const update = (name, currentCity, id, photo) => {
   return db.query(`
     UPDATE users
-    SET name=$1, current_city=$2
+    SET name=$1, current_city=$2, photo=$4
     WHERE id=$3
-    `, [name, currentCity, id]);
+    `, [name, currentCity, id, photo]);
 };
 
 

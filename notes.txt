@@ -49,3 +49,5 @@ a=b
 now, if Somaya changes b, a is also different. But I don't expect a to be different!
 
 If something doesn't exist, it should complain that it doesn't exist, don't put in a default value (like env variable for port, don't put || 3000)
+
+bytea for photos???

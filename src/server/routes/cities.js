@@ -11,16 +11,14 @@ router.get('/', (request, response) => {
 
 router.get('/:id', (request, response) => {
   const id = request.params.id;
-  console.log("id:::::", id);
   Cities.findById(id)
   .then(city => {
-    console.log("city::::", city);
     Cities.getPostsByCityId(`${city.id}`)
     .then(posts => {
-      console.log("posts:::::", posts);
       response.render('cities/show', {city, posts});
       });
-    });
+    })
+    .catch(err => {console.error(err);});
 });
 
 module.exports = router;

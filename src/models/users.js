@@ -16,8 +16,8 @@ const getPostsByUserId = function(userId) {
   return db.getPostsByUserId(userId);
 };
 
-const updateProfile = function(name, currentCity, id) {
-  return db.update(name, currentCity, id);
+const updateProfile = function(name, currentCity, id, photo) {
+  return db.update(name, currentCity, id, photo);
 };
 
 module.exports = {

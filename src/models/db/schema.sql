@@ -5,7 +5,8 @@ CREATE TABLE users(
   password varchar(255) NOT NULL,
   name varchar(255),
   date_joined DATE NOT NULL DEFAULT CURRENT_DATE,
-  current_city varchar(255)
+  current_city varchar(255),
+  photo varchar(255)
 );
 
 DROP TABLE IF EXISTS cities;

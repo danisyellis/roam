@@ -10,8 +10,9 @@ router.get('/', (request, response) => {
   if(request.session.user) {
     const id = request.session.user.id;
     response.redirect(`/users/${id}`);
+  } else {
+    response.render('index');
   }
-  response.render('index');
 });
 
 router.use('/', auth);

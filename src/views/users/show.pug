@@ -3,7 +3,10 @@ extends /partials/layout
 block content
   
   div.leftColumn
-    img(src="/blank-profile-picture.png")
+    if user.photo
+      img(src=`${user.photo}`)
+    else
+      img(src="/blank-profile-picture.png")  
     if user.name
       p #{user.name}
     else
@@ -40,5 +43,9 @@ block content
             input(type="text" name="currentCity")
           else 
             input(type="text" name="currentCity" value=`${user.current_city}`)  
+        div Photo:
+          input(type="hidden" role="uploadcare-uploader" name="content" data-public-key="d3bdd9b0e78c8c3078b1" data-images-only)
         input(type="submit", value="Submit")
-            
+
+block scripts
+  script(src='/scripts/users.js')    

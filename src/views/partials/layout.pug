@@ -1,9 +1,11 @@
 html
   head
     link(rel="stylesheet", href="/style.css")
+    script(src="https://ucarecdn.com/libs/widget/3.1.4/uploadcare.full.min.js")
   body
     include header.pug
 
     block content
 
-    script(src="/script.js")
+    script(src="/scripts/script.js")
+    block scripts
